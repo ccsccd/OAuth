@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+<html lang="cn">
+<head>
+    <meta charset="UTF-8">
+    <title>登录界面</title>
+    <script src="js/jquery-1.8.3.js" charset="utf-8"></script>
+    <script>
+        function GetUrlParam(paraName) {
+            var url = document.location.toString();
+            var arrObj = url.split("?");
+
+            if (arrObj.length > 1) {
+                var arrPara = arrObj[1].split("&");
+                var arr;
+
+                for (var i = 0; i < arrPara.length; i++) {
+                    arr = arrPara[i].split("=");
+
+                    if (arr != null && arr[0] == paraName) {
+                        return arr[1];
+                    }
+                }
+                return "";
+            }
+            else {
+                return "";
+            }
+        }
+        function login() {
+            var param = GetUrlParam("redirectUri");
+            $.post("/oAuth/login",
+                {
+                    username: $(".username").val().toString(),
+                    password: $(".password").val().toString(),
+                    redirectUri:param.toString()
+                }
+                ,
+                function rs(txt) {
+                    alert(txt);
+                })
+        }
+    </script>
+</head>
+<body bgcolor="#93B1D5" >
+<div style="text-align:center;margin-top: 10%">
+    <h1 >登录界面</h1>
+        <table style="margin-left:40%">
+            <caption style="margin-left:30%">用户登录</caption>
+            <tr>
+                <td>用户名：</td>
+                <td><input class="username" type="text" size="20"></td>
+            </tr>
+            <tr>
+                <td>密码：</td>
+                <td><input class="password" type="password" size="20"></td>
+            </tr>
+        </table>
+        <input type="button" value="登录" onclick="login()" >
+    <br>
+</div>
+</body>
+</html>
